@@ -2,7 +2,7 @@
     <div class="form">
 
         <div class="entitys__list">
-            <div class="entity" v-for="entity in $store.state.amo.entitys" :key="entity.name">
+            <div class="entity" v-for="entity in $store.state.amo.entitys" :key="entity.id">
                 {{ entity.id }} - {{ entity.name }}
             </div>
         </div>

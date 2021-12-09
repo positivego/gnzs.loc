@@ -3355,7 +3355,7 @@ var render = function () {
       "div",
       { staticClass: "entitys__list" },
       _vm._l(_vm.$store.state.amo.entitys, function (entity) {
-        return _c("div", { key: entity.name, staticClass: "entity" }, [
+        return _c("div", { key: entity.id, staticClass: "entity" }, [
           _vm._v(
             "\n            " +
               _vm._s(entity.id) +
