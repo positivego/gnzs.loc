@@ -6,6 +6,8 @@ export default {
 
     state: {
         load: false,
+        token: '',
+        subdomain: '',
         entitys: [],
     },
     
@@ -19,7 +21,17 @@ export default {
         addEntity(state, entity)
         {
             state.entitys.push(entity)
-        }
+        },
+
+        setToken(state, token)
+        {
+            state.token = token
+        },
+
+        setSubdomain(state, subdomain)
+        {
+            state.subdomain = subdomain
+        },
 
     },
 
@@ -34,6 +46,8 @@ export default {
                 await axios.post('/api/amo/formingRequest', {
                     payload: payload,
                     available: available,
+                    token: context.state.token,
+                    subdomain: context.state.subdomain,
                 })
                 .then(response => {
                     context.commit('addEntity', JSON.parse(response.data.entity))
@@ -43,6 +57,17 @@ export default {
                 context.commit('setLoad', false)
 
             }
+        },
+
+        async getToken(context)
+        {
+            axios.post('/api/amo/getToken', {})
+            .then(response => {
+                let res = JSON.parse(response.data)
+                context.commit('setToken', res.access_token)
+                context.commit('setSubdomain', res.base_domain)
+            })
+            .catch(error => console.log(error))
         }
 
     }

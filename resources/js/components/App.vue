@@ -60,6 +60,12 @@ export default {
 
     }),
 
+    mounted() {
+
+        this.$store.dispatch('amo/getToken');
+
+    },
+
     methods: {
         ...mapActions({
             formingRequest: 'amo/formingRequest',

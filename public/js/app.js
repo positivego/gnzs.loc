@@ -2140,6 +2140,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
+  mounted: function mounted() {
+    this.$store.dispatch('amo/getToken');
+  },
   methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)({
     formingRequest: 'amo/formingRequest'
   }))
@@ -2212,6 +2215,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   namespaced: true,
   state: {
     load: false,
+    token: '',
+    subdomain: '',
     entitys: []
   },
   mutations: {
@@ -2220,6 +2225,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     addEntity: function addEntity(state, entity) {
       state.entitys.push(entity);
+    },
+    setToken: function setToken(state, token) {
+      state.token = token;
+    },
+    setSubdomain: function setSubdomain(state, subdomain) {
+      state.subdomain = subdomain;
     }
   },
   actions: {
@@ -2242,7 +2253,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.next = 5;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/amo/formingRequest', {
                   payload: payload,
-                  available: available
+                  available: available,
+                  token: context.state.token,
+                  subdomain: context.state.subdomain
                 }).then(function (response) {
                   context.commit('addEntity', JSON.parse(response.data.entity));
                 })["catch"](function (error) {
@@ -2258,6 +2271,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
+      }))();
+    },
+    getToken: function getToken(context) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/amo/getToken', {}).then(function (response) {
+                  var res = JSON.parse(response.data);
+                  context.commit('setToken', res.access_token);
+                  context.commit('setSubdomain', res.base_domain);
+                })["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     }
   }

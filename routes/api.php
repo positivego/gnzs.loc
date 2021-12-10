@@ -18,5 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'amo', 'middleware' => 'api'], function () {
 
     Route::post('formingRequest', [AmoController::class, 'formingRequest']);
+    Route::post('getToken', [AmoController::class, 'getToken']);
 
 });
